@@ -23,11 +23,9 @@ jobs:
 
       - name: List folders
         id: matrix
-        shell: pwsh
         run: |
-          $result=$(Get-ChildItem -Directory | ForEach-Object -MemberName Name | ConvertTo-Json -AsArray -Compress)
-          echo "result=$result"
-          echo "result=$result" >> $Env:GITHUB_OUTPUT
+          result=$(find * ! -path "." ! -name ".git*" -maxdepth 1 -type d -print | jq -R -s -c 'split("\n")[:-1]')
+          echo "result=$result" >> $GITHUB_OUTPUT
 
       - name: Show output
         run: |
