@@ -25,7 +25,8 @@ jobs:
         id: matrix
         shell: pwsh
         run: |
-          Write-Output "result=$(Get-ChildItem -Directory | ForEach-Object -MemberName Name | ConvertTo-Json -AsArray -Compress)" >> $Env:GITHUB_OUTPUT
+          $result=$(Get-ChildItem -Directory | ForEach-Object -MemberName Name | ConvertTo-Json -AsArray -Compress)
+          Write-Output "result=$result" >> $Env:GITHUB_OUTPUT
 
       - name: Show output
         run: |
@@ -33,10 +34,10 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
-    if: ${{ needs.setup.outputs.matrix != '[]' && needs.setup.outputs.matrix != '' }}
+    if: ${{ needs.setup.outputs.matrix.result != '[]' && needs.setup.outputs.matrix.result != '' }}
     strategy:
       matrix:
-        value: ${{fromJSON(needs.setup.outputs.matrix)}}
+        value: ${{fromJSON(needs.setup.outputs.matrix.result)}}
     needs: [setup]
     steps:
       - uses: actions/checkout@v4
