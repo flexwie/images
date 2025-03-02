@@ -34,7 +34,7 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
-    if: ${{ needs.setup.outputs.matrix.result != '[]' && needs.setup.outputs.matrix.result != '' }}
+    # if: ${{ needs.setup.outputs.matrix.result != '[]' && needs.setup.outputs.matrix.result != '' }}
     strategy:
       matrix:
         value: ${{fromJSON(needs.setup.outputs.matrix.result)}}
