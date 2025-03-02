@@ -30,7 +30,6 @@ jobs:
 
       - name: Show output
         run: |
-          echo "${{ steps.matrix.outputs.result }}"
           cat $GITHUB_OUTPUT
 
   docker:
