@@ -18,6 +18,8 @@ concurrency:
 jobs:
   setup:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.result }}
     steps:
       - uses: actions/checkout@v4
 
@@ -29,14 +31,14 @@ jobs:
 
       - name: Show output
         run: |
-          cat $GITHUB_OUTPUT
+          echo ${{ steps.matrix.outputs }}
 
   docker:
     runs-on: ubuntu-latest
     # if: ${{ needs.setup.outputs.matrix.result != '[]' && needs.setup.outputs.matrix.result != '' }}
     strategy:
       matrix:
-        value: ${{fromJSON(needs.setup.outputs.matrix.result)}}
+        value: ${{ fromJSON(needs.setup.outputs.matrix )}}
     needs: [setup]
     steps:
       - uses: actions/checkout@v4
