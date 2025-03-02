@@ -26,7 +26,7 @@ jobs:
         shell: pwsh
         run: |
           $result=$(Get-ChildItem -Directory | ForEach-Object -MemberName Name | ConvertTo-Json -AsArray -Compress)
-          Write-Output "result=$result" >> $Env:GITHUB_OUTPUT
+          Write-Output "result=$($result)" >> $Env:GITHUB_OUTPUT
 
       - name: Show output
         run: |
